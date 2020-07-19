@@ -1,40 +1,50 @@
 @echo off
 title Assignment01: Even group
+goto Menu01
+::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+:: Global Function Area
+:whileCorrectNum
+echo Press 1 to go menu 1 : Dispaly Date BE and BC
+echo Press 2 to go menu 2 : Delete all files except one
+echo Press 3 to go menu 3 : Dice Roller Until dawn
+echo Press 4 to exit
+set /p input=Select Menu:
+if %input% == 1 goto Menu01
+if %input% == 2 goto Menu02
+if %input% == 3 goto Menu03
+if %input% == 4 (goto Exit else) else (goto whileCorrectNum)
+:Exit
+echo Closing...
+timeout /t 3 /NOBREAK
+exit
+::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 :Menu01
 cls
 echo Menu:01
 echo =========
 :: Tranform BC to BE
-set year=%date:~7,2%
-set Thai=543
-set /a yearEN=%year%+2000
-set /a yearTH=%Thai%+%yearEN%
-set /a THonly2=%yearTH% %% 100
+:: โค๊ดนี้เรียก date format แบบ dd-Jul-yy
+set /a year = %date:~7,2%
+set /a thai = 543
+set /a yearBC=%year%+2000
+set /a yearBE=%thai%+%yearBC%
+set /a BE =%yearBE% %% 100
 :: Display date
 echo %date%
-echo %date:~0,7%%THonly2%
+echo %date:~0,7%%BE%
 echo =========
-set /p input=Select menu: 
-echo Press 2 to go menu 2
-echo Press 3 to go menu 3
-echo Press 4 to exit
-
-if %input% == 2 goto Menu02
-if %input% == 3 goto Menu03
-if %input% == 4 goto Exit
-if not %input% == 2 goto Menu01
-if not %input% == 3 goto Menu01
-if not %input% == 4 goto Menu01
-
+goto whileCorrectNum
+::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 :Menu02
 cls
 echo Menu:02
-setlocal enableextensions enabledelayedexpansion
+setlocal enabledelayedexpansion
 set dirPath=C:\Users\K_Olion\Desktop\Group12\put_file_in_here_to_test_menu2
 pushd !dirPath!
+:Perm
 set /p Perm=Keep any file?(y/n)
-if %Perm% == y goto chooseFile
-if %Perm% == n goto deleteAll
+if %Perm% == y (goto chooseFile) 
+if %Perm% == n (goto deleteAll) else (goto Perm)
 :chooseFile
 set /p PointFile=File name:
 set /p typeFile=Type:
@@ -45,19 +55,8 @@ goto gate
 :deleteAll
 del *.*
 :gate
-echo Press 1 to go menu 1
-echo Press 3 to go menu 3
-echo Press 4 to exit
-set /p input=
-:whileCorrectNum
-if %input% == 1 goto Menu01
-if %input% == 2 goto Menu02
-if %input% == 3 goto Menu03
-if %input% == 4 goto Exit
-if not %input% == 1 goto whileCorrectNum
-if not %input% == 2 goto whileCorrectNum
-if not %input% == 3 goto whileCorrectNum
-if not %input% == 4 goto whileCorrectNum
+goto whileCorrectNum
+::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 :Menu03
 cls
 echo Menu:03
@@ -66,39 +65,22 @@ echo Menu:03
 set /p input=Your predict number(2-12):
 if %input% lss 2 goto inputNumber
 if %input% gtr 12 goto inputNumber 
-set /a mice01=%random% %%6 +1
-set /a mice02=%random% %%6 +1
 set /a counter = 1
 :whileLoop
-set /a mice01=%random% %%6 +1
-set /a mice02=%random% %%6 +1
-set /a sumMice = %mice01%+%mice02%
+set /a dice01=%random% %%6 +1
+set /a dice02=%random% %%6 +1
+set /a sumDice = %dice01%+%dice02%
 echo =====================
-echo Mice1 : %mice01%
-echo Mice2 : %mice02%
-echo Sum of both mice : %sumMice%
-if %input% neq %sumMice% (
+echo Dice1 : %dice01%
+echo Dice2 : %dice02%
+echo Sum of both dice : %sumDice%
+if %input% neq %sumDice% (
 	set /a counter = counter +1
 	::echo %counter%
 	goto whileLoop
 )
 echo =====================
 echo The time has come and so have I...
-echo amount of mice: %counter%
-echo Press 1 to go menu 1
-echo Press 2 to go menu 2
-echo Press 4 to exit
-: whileCorrectNum
-set /p input=
-if %input% == 1 goto Menu01
-if %input% == 2 goto Menu02
-if %input% == 3 goto Menu03
-if %input% == 4 goto Exit
-if not %input% == 1 goto whileCorrectNum
-if not %input% == 2 goto whileCorrectNum
-if not %input% == 3 goto whileCorrectNum
-if not %input% == 4 goto whileCorrectNum
-:Exit
-echo Closing...
-timeout /t 3 /NOBREAK
-exit
+echo Counter : %counter%
+goto whileCorrectNum
+::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
