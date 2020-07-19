@@ -4,7 +4,7 @@ goto Menu01
 ::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 :: Global Function Area
 :whileCorrectNum
-echo Press 1 to go menu 1 : Dispaly Date BE and BC
+echo Press 1 to go menu 1 : Display Date BE and BC
 echo Press 2 to go menu 2 : Delete all files except one
 echo Press 3 to go menu 3 : Dice Roller Until dawn
 echo Press 4 to exit
@@ -24,14 +24,12 @@ echo Menu:01
 echo =========
 :: Tranform BC to BE
 :: โค๊ดนี้เรียก date format แบบ dd-Jul-yy
-set /a year = %date:~7,2%
-set /a thai = 543
-set /a yearBC=%year%+2000
-set /a yearBE=%thai%+%yearBC%
-set /a BE =%yearBE% %% 100
+set /a year = %date:~7,2% + 2000
+set /a BCtoBE = %year% + 543
+set /a shortBE =%BCtoBE% %% 100
 :: Display date
 echo %date%
-echo %date:~0,7%%BE%
+echo %date:~0,7%%shortBE%
 echo =========
 goto whileCorrectNum
 ::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -39,8 +37,8 @@ goto whileCorrectNum
 cls
 echo Menu:02
 setlocal enabledelayedexpansion
-set dirPath=C:\Users\K_Olion\Desktop\Group12\put_file_in_here_to_test_menu2
-pushd !dirPath!
+set delFolderPath=put_file_in_here_to_test_menu2
+pushd %delFolderPath%
 :Perm
 set /p Perm=Keep any file?(y/n)
 if %Perm% == y (goto chooseFile) 
@@ -60,7 +58,6 @@ goto whileCorrectNum
 :Menu03
 cls
 echo Menu:03
-
 :inputNumber
 set /p input=Your predict number(2-12):
 if %input% lss 2 goto inputNumber
