@@ -10,13 +10,15 @@ set Thai=543
 set /a yearEN=%year%+2000
 set /a yearTH=%Thai%+%yearEN%
 set /a THonly2=%yearTH% %% 100
+:: Display date
 echo %date%
 echo %date:~0,7%%THonly2%
 echo =========
+set /p input=Select menu: 
 echo Press 2 to go menu 2
 echo Press 3 to go menu 3
 echo Press 4 to exit
-set /p input=
+
 if %input% == 2 goto Menu02
 if %input% == 3 goto Menu03
 if %input% == 4 goto Exit
